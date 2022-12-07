@@ -1,5 +1,9 @@
-const HUM_ADDRESS = "0x174aFE7A032b5A33a3270a9f6C30746E25708532";
-const HUM_ABI = [
+/* 
+    This is example of ERC20 params.
+    Use your own ERC20 address and abi!
+*/
+const ERC20_ADDRESS = "0x174aFE7A032b5A33a3270a9f6C30746E25708532";
+const ERC20_ABI = [
 	{
 		"anonymous": false,
 		"inputs": [
@@ -558,6 +562,6 @@ const HUM_ABI = [
 ]
 
 module.exports = {
-    HUM_ADDRESS: HUM_ADDRESS,
-	HUM_ABI: HUM_ABI
+    ERC20_ADDRESS: ERC20_ADDRESS,
+	ERC20_ABI: ERC20_ABI
 };
