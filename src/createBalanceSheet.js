@@ -4,7 +4,7 @@ const fs = require('fs');
 // balanceSheet of ERC20
 const balanceSheet = new Map();
 
-const createBalanceSheet = async (index) => {
+const buildBalanceSheet = async (index) => {
     // get transaction receipt 
     const data = JSON.parse(
         await fs.promises.readFile(
@@ -57,8 +57,8 @@ const writeBalanceSheet = async (balanceSheet) => {
 
 async function main() {
     for (let i = 1; i < 33; i++) {
-        i < 10 ? await createBalanceSheet("0"+i) : 
-        await createBalanceSheet(i.toString())
+        i < 10 ? await buildBalanceSheet("0"+i) : 
+        await buildBalanceSheet(i.toString())
     }
     await writeBalanceSheet(balanceSheet);
 }
