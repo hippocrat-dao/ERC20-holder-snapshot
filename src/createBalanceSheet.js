@@ -42,7 +42,7 @@ const buildBalanceSheet = async (index) => {
 const writeBalanceSheet = async (balanceSheet) => {
     // Big Int to string
     await balanceSheet.forEach((value, key, map) => {
-        // if holds less than 10 ERC20, excludes
+        // if holds less than 10 ERC20, excludes(it's up to your policy)
         value < BigInt("10000000000000000000")  ? map.delete(key)
         : map.set(key, value.toString())
     })
@@ -55,7 +55,7 @@ const writeBalanceSheet = async (balanceSheet) => {
     ))    
 }
 
-async function main() {
+const createBalanceSheet = async () => {
     for (let i = 1; i < 33; i++) {
         i < 10 ? await buildBalanceSheet("0"+i) : 
         await buildBalanceSheet(i.toString())
@@ -63,4 +63,4 @@ async function main() {
     await writeBalanceSheet(balanceSheet);
 }
 
-main();
+createBalanceSheet();
