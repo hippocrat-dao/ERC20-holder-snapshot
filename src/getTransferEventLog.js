@@ -7,9 +7,10 @@ const provider = new ethers.providers.EtherscanProvider('homestead', process.env
 
 const ERC20 = new ethers.Contract(ERC20_ADDRESS, ERC20_ABI, provider);
 /*********************************************************************
-    IMPORTANT: include Mint, Burn or whatever besides Transfer 
-               to get full logs of ERC20 balance updates(if required).
-               Transfer itself may be not enough.
+    IMPORTANT: Usually Transfer event will be enought to get full logs 
+               of ERC20 balance updates, Because Mint, Burn or 
+               whatever methods to transfer ERC20 also emits Transfer event.
+               However, There might be an exception. Be cautious!
 ***********************************************************************/
 const filter = new ERC20.filters.Transfer();
 
