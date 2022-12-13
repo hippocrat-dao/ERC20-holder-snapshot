@@ -14,9 +14,10 @@ const ERC20 = new ethers.Contract(ERC20_ADDRESS, ERC20_ABI, provider);
 ***********************************************************************/
 const filter = new ERC20.filters.Transfer();
 
-const getTransferEventLog = async () =>
+const getTransferEventLog = async (index = "") => {
+    index < 10 && index != "" ? index = "0" + index : index = index
     await fs.promises.writeFile(
-        'transferLog.json',
+        `./log/transferLog${index}.json`,
         JSON.stringify(
             /*
                 Keep in mind that many backends will discard old events, 
@@ -25,8 +26,8 @@ const getTransferEventLog = async () =>
                 Try segmenting block ranges and requesting sequentially!
             */
             await ERC20.queryFilter(filter,
-                8345679, // from block height(ERC20 created block)
-                "latest" // to block height(snapshot block)
-    )));
+                parseInt(process.argv[2]), // from block height(ERC20 created block, ex) 8345679)
+                parseInt(process.argv[3]) // to block height(snapshot block)
+    )))};
 
-getTransferEventLog();
+getTransferEventLog(process.argv[4]);
