@@ -1,5 +1,7 @@
 # HUM-Transaction-Log
-All Humanscape Tx logs for record.
+All Humanscape Transfer logs for record.
+
+If you can query all transfer events at once, you do not need to segment like below.
 
 transferLog01 : 8345679-8393104
 
