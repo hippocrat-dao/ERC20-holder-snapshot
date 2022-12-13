@@ -4,7 +4,7 @@ const fs = require('fs');
 // balanceSheet of ERC20
 const balanceSheet = new Map();
 
-const buildBalanceSheet = async (index) => {
+const buildBalanceSheet = async (index = "") => {
     // get transaction receipt 
     const data = JSON.parse(
         await fs.promises.readFile(
@@ -42,8 +42,8 @@ const buildBalanceSheet = async (index) => {
 const writeBalanceSheet = async (balanceSheet) => {
     // Big Int to string
     await balanceSheet.forEach((value, key, map) => {
-        // if holds less than 10 ERC20, excludes(it's up to your policy)
-        value < BigInt("10000000000000000000")  ? map.delete(key)
+        // get rid of empty adresses & null address
+        value <= BigInt("0")  ? map.delete(key)
         : map.set(key, value.toString())
     })
     console.log(balanceSheet.size);
@@ -55,11 +55,18 @@ const writeBalanceSheet = async (balanceSheet) => {
     ))    
 }
 
-const createBalanceSheet = async () => {
-    for (let i = 1; i < 33; i++) {
-        i < 10 ? await buildBalanceSheet("0"+i) : 
-        await buildBalanceSheet(i.toString())
-    }
+const createBalanceSheet = async () => {    
+    // in case of multiple tranfer log files
+    const buildBalanceSheetLoop = async (index) => {
+        for (let i = 1; i < index + 1; i++) {
+            i < 10 ? await buildBalanceSheet("0"+i) : 
+            await buildBalanceSheet(i.toString())
+    }}
+
+    process.argv[2] === undefined ? 
+    await buildBalanceSheet()
+    : await buildBalanceSheetLoop(parseInt(process.argv[2]))
+    
     await writeBalanceSheet(balanceSheet);
 }
 
